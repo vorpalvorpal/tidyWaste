@@ -21,7 +21,12 @@ Imports:
     meteoHazard,
     utils
 Suggests:
+    knitr,
+    pak,
+    rmarkdown,
     testthat (>= 3.0.0)
+VignetteBuilder:
+    knitr
 Remotes:
     vorpalvorpal/hydroSense,
     vorpalvorpal/meteoHazard

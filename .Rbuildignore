@@ -4,3 +4,6 @@
 ^\.claude$
 ^README\.Rmd$
 ^\.github$
+
+^vignettes/.*\.html$
+^vignettes/.*\.R$

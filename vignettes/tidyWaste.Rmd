@@ -1,0 +1,78 @@
+---
+title: "The tidyWaste family"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The tidyWaste family}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+```{r setup}
+library(tidyWaste)
+```
+
+## Overview
+
+**tidyWaste** is a meta-package: it installs and loads a family of packages
+for environmental analysis in waste-management operations. A single
+`library(tidyWaste)` attaches every core member, so you can move between
+water-quality and meteorological work without juggling `library()` calls.
+
+## The members
+
+| Package | Domain | What it does |
+|---|---|---|
+| [hydroSense](https://github.com/vorpalvorpal/hydroSense) | Water quality | Leachate-mixing fraction (end-member mixing), Bayesian imputation of below-detection analytes, and SSD-based toxicity (PAF / msPAF) for leachate-impacted freshwaters. |
+| [meteoHazard](https://github.com/vorpalvorpal/meteoHazard) | Meteorology | Management-relevant hazard predictions: Thermal Work Limit (TWL) heat stress, plus odour-dispersion, wind-blown-litter and dust predictors. |
+
+The family is expected to grow; new members are added to this meta-package as
+they stabilise.
+
+## Loading the family
+
+```{r}
+library(tidyWaste)
+#> ── Attaching tidyWaste 0.0.0.9000 ──────────────────────────────────
+#> ✔ hydroSense   0.2.0     ✔ meteoHazard   0.1.0
+```
+
+List the members at any time:
+
+```{r}
+tidyWaste_packages()
+```
+
+## Keeping up to date
+
+`tidyWaste_update()` reports the installed version of each member and prints
+the command to reinstall the latest from GitHub:
+
+```{r}
+tidyWaste_update()
+```
+
+## Name conflicts
+
+As the family grows, two members may export functions of the same name. The
+one that wins depends on attach order. `tidyWaste_conflicts()` surfaces these
+so you can qualify the call explicitly (e.g. `hydroSense::foo()`):
+
+```{r}
+tidyWaste_conflicts()
+```
+
+## Where shared code lives
+
+This meta-package sits at the *top* of the dependency graph: it imports the
+members, so it can offer family-level conveniences but cannot host code that
+the members themselves need. Shared building blocks — a common site object,
+units and coordinate conventions, validation helpers and example data — belong
+in a lower-level package that each member imports, not here.
